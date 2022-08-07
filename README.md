@@ -1,34 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Label This
 
-## Getting Started
+A machine learning dataset compiler that allows users to label datasets created by others.
 
-First, run the development server:
+## Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
+Make sure that you have installed [Git](https://git-scm.com/) and [Docker](https://docs.docker.com/get-docker/).
+
+## Installation
+
+In your favorite shell, type the following in order.
+
+```
+git clone https://github.com/AKeyNo/book-finder.git
+cd label-this
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Fill out the .env_example file and rename the file name to .env.
+After this, type in the following commands.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+docker build -t label-this .
+docker-compose up --build --force-recreate
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+In Docker, open the shell for the main application (called label-this), and type the following command.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+npx migrate dev
+```
 
-## Learn More
+After running these commands, it will be on http://localhost:3000/.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Book Finder is released under the MIT License. Check the [LICENSE](https://github.com/AKeyNo/label-this/blob/main/LICENSE) file for more information.
