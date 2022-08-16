@@ -17,8 +17,15 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(200).json({
-    descriptions: tempDescriptions,
-    label: tempLabel,
-  });
+  switch (req.method) {
+    case 'GET':
+      res.status(200).json({
+        descriptions: tempDescriptions,
+        label: tempLabel,
+      });
+      break;
+    default:
+      res.setHeader('Allow', ['GET']);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
 }
