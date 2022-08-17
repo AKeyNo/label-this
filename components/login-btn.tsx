@@ -7,14 +7,18 @@ export default function Login() {
     return (
       <>
         Signed in as {session.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
+        <button id='sign-out-button' onClick={() => signOut()}>
+          Sign out
+        </button>
       </>
     );
   }
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <button id='sign-in-button' onClick={() => signIn()}>
+        Sign in
+      </button>
     </>
   );
 }
