@@ -3,6 +3,9 @@ import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import EmailProvider from 'next-auth/providers/email';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import sha256 from 'crypto-js/sha256';
+import { Router, useRouter } from 'next/router';
 
 const prisma = new PrismaClient();
 
@@ -31,6 +34,42 @@ export default NextAuth({
         },
       },
       from: process.env.EMAIL_FROM,
+    }),
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. 'Sign in with...')
+      id: 'credentials',
+      name: 'credentials',
+      // The credentials is used to generate a suitable form on the sign in page.
+      // You can specify whatever fields you are expecting to be submitted.
+      // e.g. domain, username, password, 2FA token, etc.
+      // You can pass any HTML attribute to the <input> tag through the object.
+      credentials: {
+        username: {
+          label: 'Username',
+          type: 'text',
+          placeholder: 'jsmith',
+        },
+        password: { label: 'Password', type: 'password' },
+      },
+      authorize: async (credentials: any, req) => {
+        console.log(credentials);
+
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.username },
+        });
+
+        if (!user) {
+          return null;
+        }
+
+        const hashedPassword = sha256(credentials.password).toString();
+
+        if (hashedPassword == user.hashedPassword) {
+          return user;
+        } else {
+          return null;
+        }
+      },
     }),
   ],
   theme: {
