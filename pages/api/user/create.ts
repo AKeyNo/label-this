@@ -1,8 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import sha256 from 'crypto-js/sha256';
-import { bodyStreamToNodeStream } from 'next/dist/server/body-streams';
-const MINIMUM_PASSWORD_LENGTH = 12;
 
 const prisma = new PrismaClient();
 
@@ -37,7 +35,9 @@ const isEmailNotUnique = async (email: string) => {
 
 const isPasswordWeak = (password: string) => {
   // check character length only as of right now
-  return password.length < MINIMUM_PASSWORD_LENGTH;
+  return (
+    password.length < parseInt(process.env.MINIMUM_PASSWORD_LENGTH ?? '12')
+  );
 };
 
 // POST /api/user
