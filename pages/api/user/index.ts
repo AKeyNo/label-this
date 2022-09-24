@@ -69,9 +69,17 @@ async function handlePOST(res: NextApiResponse, req: NextApiRequest) {
   return res.status(200).json({ email, name });
 }
 
+// DELETE /api/user
 async function handleDELETE(res: NextApiResponse, req: NextApiRequest) {
   // TODO: Add a way to make any user not be able to delete users.
-  const user = await prisma.user.delete({
-    where: { email: req.body.email },
-  });
+  try {
+    await prisma.$queryRaw`TRUNCATE TABLE public."User" CASCADE`;
+    return res
+      .status(200)
+      .json({ message: 'Successfully truncated User table.' });
+  } catch (e) {
+    return res.status(400).json({
+      message: e,
+    });
+  }
 }

@@ -1,5 +1,6 @@
 describe('signs up for the website', () => {
   beforeEach(() => {
+    cy.request('DELETE', 'http://localhost:3000/api/user');
     cy.visit('http://localhost:3000/');
   });
 
