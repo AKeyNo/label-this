@@ -26,7 +26,7 @@ const SignUp = () => {
     const { email, password, name } = account;
 
     try {
-      const post = await axios.post('/api/user/create', {
+      const post = await axios.post('/api/user', {
         email,
         password,
         name,
