@@ -5,7 +5,6 @@ import { PrismaClient } from '@prisma/client';
 import EmailProvider from 'next-auth/providers/email';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import sha256 from 'crypto-js/sha256';
-import { Router, useRouter } from 'next/router';
 
 const prisma = new PrismaClient();
 
@@ -52,7 +51,7 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       authorize: async (credentials: any, req) => {
-        console.log(credentials);
+        // console.log(credentials);
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.username },

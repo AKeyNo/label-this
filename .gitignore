@@ -7,10 +7,6 @@
 
 # testing
 /coverage
-/cypress/downloads
-/cypress/support
-/cypress/e2e/examples
-/cypress/fixtures
 
 # next.js
 /.next/

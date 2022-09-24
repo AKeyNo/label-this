@@ -1,7 +1,11 @@
 import { useSession, signIn, signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 export default function Login() {
   const { data: session } = useSession();
+  const router = useRouter();
+
+  if (router.pathname == '/user/signup') return;
 
   if (session) {
     return (
@@ -18,6 +22,9 @@ export default function Login() {
       Not signed in <br />
       <button id='sign-in-button' onClick={() => signIn()}>
         Sign in
+      </button>
+      <button id='sign-up-button' onClick={() => router.push('/user/signup')}>
+        Sign up
       </button>
     </>
   );

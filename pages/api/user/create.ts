@@ -12,6 +12,9 @@ export default async function handler(
     case 'POST':
       await handlePOST(res, req);
       break;
+    case 'DELETE':
+      await handleDELETE(res, req);
+      break;
     default:
       res.setHeader('Allow', ['POST']);
       res.status(405).end(`Method ${req.method} Not Allowed`);
@@ -64,4 +67,11 @@ async function handlePOST(res: NextApiResponse, req: NextApiRequest) {
     data: { email, hashedPassword, name },
   });
   return res.status(200).json({ email, name });
+}
+
+async function handleDELETE(res: NextApiResponse, req: NextApiRequest) {
+  // TODO: Add a way to make any user not be able to delete users.
+  const user = await prisma.user.delete({
+    where: { email: req.body.email },
+  });
 }
