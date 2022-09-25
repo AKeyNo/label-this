@@ -4,7 +4,7 @@ describe('signs up for the website', () => {
     cy.visit('http://localhost:3000/');
   });
 
-  it('signs up for an account', () => {
+  it('signs up for an account AND LOGIN', () => {
     // make sure there is a sign up button that is can be clicked
     cy.get('#sign-up-button').should('have.text', 'Sign up').click();
 
@@ -34,6 +34,16 @@ describe('signs up for the website', () => {
     cy.get('#sign-up-submit').click();
 
     // sign into that account
-    cy.get('#sign-in-button');
+    cy.get('#sign-in-button').click();
+    cy.get('#input-username-for-credentials-provider').type(
+      'juliuscaesar@test.com'
+    );
+    cy.get('#input-password-for-credentials-provider').type(
+      'thi!spas%sword%i(sst^rong)'
+    );
+    cy.get(':nth-child(3) > form > button').click();
+
+    // make sure the sign out button is visible
+    cy.get('#sign-out-button');
   });
 });
